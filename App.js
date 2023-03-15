@@ -88,7 +88,6 @@ function HomeScreen({ navigation, route }){
       <Tab.Screen name="Menu" component={Menu} options={{
       tabBarIcon: ({ focused }) =>  <EntypoIcon name='dots-three-horizontal' size={20} color={focused ? activeColor : inactiveColor}/>
       }}/>
-
     </Tab.Navigator>
   )
 }
@@ -124,8 +123,6 @@ function App() {
               />
             </View>
           })}/>
-        {/* <Stack.Screen name="Details" component={DetailsScreen} options={({ route }) => ({title: route.params.productName})} initialParams={{initialId: 99}}/> */}
-        {/* <Stack.Screen name="Create Post" component={CreatePost} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
