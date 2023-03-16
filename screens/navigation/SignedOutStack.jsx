@@ -1,24 +1,26 @@
+import { useState } from 'react'
 import { StyleSheet, Text, View, Button, ScrollView, ImageBackground, Image, Dimensions } from 'react-native'
 import { SafeAreaView } from 'react-native'
 import FAIcon from 'react-native-vector-icons/FontAwesome'
 
 const images = [
   { image: require('../../assets/scroll4.avif'),
-    title: 'Accessories' 
-  },
-  { image: require('../../assets/scroll1.jpeg'),
     title: 'Supplements' 
   },
+  { image: require('../../assets/scroll1.jpeg'),
+    title: 'Meals' 
+  },
   { image: require('../../assets/scroll2.jpeg'),
-    title: 'Training' 
+    title: 'Exercises' 
   },
   { image: require('../../assets/scroll3.jpeg'),
-    title: 'Meals' 
+    title: 'Accessories' 
   },
 ]
 const screenWidth = Dimensions.get('window').width
 
 function SignedOutStack({ setIsSignedIn }) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   return (
     <>
@@ -42,24 +44,41 @@ function SignedOutStack({ setIsSignedIn }) {
       snapToInterval={screenWidth}
       snapToAlignment={"center"}
       >
-        {images.map(item => (
-        <ImageBackground source={item.image} resizeMode="cover" style={styles.backgroundImage}>
+        {images.map((item, index) => {
+          const wee = 0
+        return (
+        <ImageBackground key={`screen_${index}`} source={item.image} resizeMode="cover" style={styles.backgroundImage}>
           <SafeAreaView style={styles.container}>
             <View></View>
             <View style={styles.textContainer}>
-              <Text style={styles.textContainer.heading}>Supplements</Text>
+              <Text style={styles.textContainer.heading}>{item.title}</Text>
               <Text style={styles.textContainer.description}>
                 Workout plans designed to help you achieve your fitness goals - 
                 whether losing weight or building muscle
               </Text>
             </View>
-            <View >
+            <View>
+              {/* Fake Container for flex space   */}
             </View>
           </SafeAreaView>
         </ImageBackground>
-        ))}
+        )
+})}
       </ScrollView>
-      <Text style={{position: 'absolute', bottom: 140, left: 50, color: '#fff'}}>Testing</Text>
+      <View style={styles.bottomContainer}>
+        <View style={styles.bottomContainer.indicatorRow}>
+        {images.map((item, index) => (
+            <FAIcon 
+              style={[
+                styles.bottomContainer.indicatorRow.circle,
+                index !== currentImageIndex ? styles.bottomContainer.indicatorRow.inactive : '' 
+              ]}
+              name="circle" 
+              size={20}
+              />
+              ))}
+          </View>
+      </View>
     </View>
       </>
   )
@@ -110,7 +129,6 @@ const styles = StyleSheet.create({
     }
   },
   textContainer: {
-    // backgroundColor: 'red',
     heading: {
       fontSize: 42,
       fontWeight: 'bold',
@@ -118,6 +136,27 @@ const styles = StyleSheet.create({
     },
     description: {
       color: '#fff'
+    }
+  },
+  bottomContainer: {
+    position: 'absolute', 
+    bottom: 150, 
+    paddingHorizontal: 50,
+    // backgroundColor: 'red',
+    width: '100%',
+    // justifyContent: 'center',
+    alignItems: 'center',
+    indicatorRow: {
+      flexDirection: 'row',
+      // backgroundColor: 'pink',
+      circle: {
+        color: '#fff',
+        marginHorizontal: 5,
+        fontSize: 11, 
+      },
+      inactive: {
+        opacity: 0.5
+      }
     }
   }
 })
