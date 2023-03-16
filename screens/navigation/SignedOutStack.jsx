@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { StyleSheet, Text, View, Button, ScrollView, ImageBackground, Image, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Button, ScrollView, ImageBackground, Image, Dimensions, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native'
 import FAIcon from 'react-native-vector-icons/FontAwesome'
 
@@ -45,7 +45,6 @@ function SignedOutStack({ setIsSignedIn }) {
       snapToAlignment={"center"}
       >
         {images.map((item, index) => {
-          const wee = 0
         return (
         <ImageBackground key={`screen_${index}`} source={item.image} resizeMode="cover" style={styles.backgroundImage}>
           <SafeAreaView style={styles.container}>
@@ -68,7 +67,8 @@ function SignedOutStack({ setIsSignedIn }) {
       <View style={styles.bottomContainer}>
         <View style={styles.bottomContainer.indicatorRow}>
         {images.map((item, index) => (
-            <FAIcon 
+            <FAIcon
+              key={`item_${index}`} 
               style={[
                 styles.bottomContainer.indicatorRow.circle,
                 index !== currentImageIndex ? styles.bottomContainer.indicatorRow.inactive : '' 
@@ -77,6 +77,14 @@ function SignedOutStack({ setIsSignedIn }) {
               size={20}
               />
               ))}
+          </View>
+          <View style={styles.bottomContainer.buttonRow}>
+            <TouchableOpacity style={styles.bottomContainer.buttonRow.login}>
+              <Text style={styles.bottomContainer.buttonRow.loginText}>Log In</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.bottomContainer.buttonRow.signup}>
+              <Text style={styles.bottomContainer.buttonRow.signupText}>Sign Up</Text>
+            </TouchableOpacity>
           </View>
       </View>
     </View>
@@ -138,9 +146,9 @@ const styles = StyleSheet.create({
       color: '#fff'
     }
   },
-  bottomContainer: {
+    bottomContainer: {
     position: 'absolute', 
-    bottom: 150, 
+    bottom: 100, 
     paddingHorizontal: 50,
     // backgroundColor: 'red',
     width: '100%',
@@ -157,6 +165,36 @@ const styles = StyleSheet.create({
       inactive: {
         opacity: 0.5
       }
-    }
+    },
+    buttonRow: {
+      flexDirection: 'row',
+      paddingTop: 40,
+      width: '95%',
+      justifyContent: 'space-between',
+      login: {
+        borderRadius: 30,
+        borderColor: '#fff',
+        borderStyle: 'solid',
+        borderWidth: 1,
+      },
+      loginText: {
+        color: '#fff', 
+        paddingHorizontal: 35, 
+        paddingVertical: 8
+      },
+      signup: {
+        backgroundColor: '#fff',
+        borderRadius: 30,
+        borderColor: '#fff',
+        borderStyle: 'solid',
+        borderWidth: 1,
+      },
+      signupText: {
+        color: '#000', 
+        paddingHorizontal: 35, 
+        paddingVertical: 8
+      }
+
+    },
   }
 })
