@@ -1,9 +1,7 @@
-import { useEffect, useState, useCallback } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput, Image, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 
 // Navigation
-import { NavigationContainer, useFocusEffect, getFocusedRouteNameFromRoute } from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
@@ -81,7 +79,7 @@ function HomeScreen({ navigation, route }){
 // Stack Navigator
 const Stack = createNativeStackNavigator()
 
-function SignedInStack() {
+function SignedInStack({setIsSignedIn}) {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'
@@ -107,6 +105,7 @@ function SignedInStack() {
               name='person' 
               size={20} 
               color={inactiveColor} 
+              onPress={() => setIsSignedIn(false)}
               />
             </View>
           })}/>
