@@ -17,11 +17,11 @@ const images = [
     title: 'Accessories' 
   },
 ]
+
 const screenWidth = Dimensions.get('window').width
 
 function SignedOutStack({ setIsSignedIn }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-
   return (
     <>
     <View style={{flex: 1, position: 'relative'}}>
@@ -43,6 +43,14 @@ function SignedOutStack({ setIsSignedIn }) {
       decelerationRate={0}
       snapToInterval={screenWidth}
       snapToAlignment={"center"}
+      onScroll={(e) => {
+        const x = e.nativeEvent.contentOffset.x
+        images.forEach((img, index) => {
+         x === screenWidth * index ? setCurrentImageIndex(index) : null
+        })
+      }}
+      
+      scrollEventThrottle={16}
       >
         {images.map((item, index) => {
         return (
@@ -71,7 +79,7 @@ function SignedOutStack({ setIsSignedIn }) {
               key={`item_${index}`} 
               style={[
                 styles.bottomContainer.indicatorRow.circle,
-                index !== currentImageIndex ? styles.bottomContainer.indicatorRow.inactive : '' 
+                index === currentImageIndex ? '' : styles.bottomContainer.indicatorRow.inactive
               ]}
               name="circle" 
               size={20}
@@ -79,7 +87,10 @@ function SignedOutStack({ setIsSignedIn }) {
               ))}
           </View>
           <View style={styles.bottomContainer.buttonRow}>
-            <TouchableOpacity style={styles.bottomContainer.buttonRow.login}>
+            <TouchableOpacity 
+            style={styles.bottomContainer.buttonRow.login}
+            onPress={() => setIsSignedIn(true)}
+            >
               <Text style={styles.bottomContainer.buttonRow.loginText}>Log In</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.bottomContainer.buttonRow.signup}>
@@ -88,7 +99,7 @@ function SignedOutStack({ setIsSignedIn }) {
           </View>
       </View>
     </View>
-      </>
+    </>
   )
 }
 
