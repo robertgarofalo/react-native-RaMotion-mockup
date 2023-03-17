@@ -8,7 +8,7 @@
 
 ## APP DEMO
 
-[App Demo](assets/ramotion-mockup.gif)
+![](assets/ramotion-mockup.gif)
 
 <br>
 
